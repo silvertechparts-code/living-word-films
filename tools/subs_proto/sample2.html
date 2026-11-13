@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8"><style>
+@font-face{font-family:Anek;src:url(ml800.woff2) format("woff2");unicode-range:U+0D00-0D7F,U+200C-200D,U+25CC}
+@font-face{font-family:Anek;src:url(lat800.woff2) format("woff2");unicode-range:U+0000-00FF}
+body{margin:0;width:1080px;height:1920px;position:relative;overflow:hidden;background:#000}
+.bg{position:absolute;inset:0;background-size:cover}
+/* bottom-anchored: the last line always sits on the same baseline */
+.sub{position:absolute;left:110px;right:110px;bottom:170px;text-align:center;font-family:Anek;font-weight:800;font-size:52px;line-height:1.5;color:#fff6e0;
+ text-shadow:0 0 6px rgba(0,0,0,.9),0 3px 10px rgba(0,0,0,.85),0 0 26px rgba(0,0,0,.65)}
+.sub span{background:linear-gradient(rgba(10,14,30,.30),rgba(10,14,30,.30));padding:3px 20px;border-radius:12px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.g{display:none;position:absolute}
+body.guides .g{display:block}
+.g.zone{left:0;right:0;top:1640px;bottom:0;background:rgba(255,0,0,.18);border-top:2px dashed rgba(255,80,80,.9);color:#fff;font:28px sans-serif;padding:8px 14px}
+.g.rt{right:0;top:1150px;width:120px;height:500px;background:rgba(255,0,0,.18);border-left:2px dashed rgba(255,80,80,.9)}
+.g.top{left:0;right:0;top:0;height:270px;background:rgba(255,0,0,.12);border-bottom:2px dashed rgba(255,80,80,.9)}
+</style>
+<div class="bg" id="bg"></div><div class="sub"><span id="t"></span></div>
+<div class="g zone">approx. username / caption / audio area</div><div class="g rt"></div><div class="g top"></div>

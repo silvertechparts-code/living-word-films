@@ -1,0 +1,14 @@
+node_modules/
+dist/
+__pycache__/
+*.mp4
+*.wav
+*.m4a
+*.png
+!g11/assets/logo.png
+*.log
+*.mbtree
+vo/model/
+music/out*/
+music/t0/
+music/t1/
