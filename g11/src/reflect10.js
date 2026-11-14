@@ -17,7 +17,7 @@ const TR = ['#27324c', '#3a3a44', '#4a4036', '#2e3c34', '#3a4a6a'];
 const HR = ['#2a1a10', '#1f160d', '#3a2616', '#5a4128', '#6a4a2a', '#8a8478'];
 
 // a present-day person (jacket, trousers, shoes); legs and arms pivot for walking and gestures
-function makeModern(R, o = {}) {
+export function makeModern(R, o = {}) {
   const g = new THREE.Group(), b = new GB(R), jacket = o.jacket || pk(R, JK), jacket2 = o.jacket2 || pk(R, JK), trou = o.trou || pk(R, TR), skin = o.skin || pk(R, SK), hair = o.hair || pk(R, HR), shoe = '#17171f';
   b.box(jacket, [0, .75, 0], [.36, .46, .2], [0, 0, 0], .04); b.box(jacket2, [0, .54, 0], [.38, .1, .22], [0, 0, 0], .04); b.box(jacket2, [0, 1.0, .0], [.3, .1, .2], [0, 0, 0], .04);
   if (o.scarf) b.box(o.scarf, [0, .99, .02], [.3, .09, .22], [0, 0, 0], .03);
