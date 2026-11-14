@@ -7,18 +7,19 @@ Scripts, narration, captions, owner decisions, QC records and the publish log li
 ## Layout (mirrors the working directory `/home/claude`; scripts use these absolute paths)
 | Folder | What |
 |---|---|
-| `g11/` | Episode 7 and 8 page source. `src/main8.js` is the Episode 8 entry, `build8.sh` bundles it with the fonts and `assets/logo.png` into one self-contained `ep8.html` (exposes `window.seek(t)`, `window.DURATION`). Needs `npm install` (three, esbuild, @fontsource fonts) |
+| `g11/` | Episode 7, 8 and 9 page source. `src/main8.js` / `src/main9.js` are the Episode 8 / 9 entries, `build8.sh` / `build9.sh` bundle them with the fonts and `assets/logo.png` into one self-contained `ep8.html` / `ep9.html` (exposes `window.seek(t)`, `window.DURATION`). Episode 9 adds `world9.js`, `reflect9.js`, `end9.js`, the rainbow (`makeBow` in `world9.js`) and the Malayalam subtitle layer `subs9.js` with its cards `subs9.json` (Anek Malayalam ExtraBold 52 px, bottom edge y = 1750, 2 lines max, every line inside 860 px). Needs `npm install` (three, esbuild, @fontsource fonts incl. anek-malayalam) |
 | `music/` | numpy/scipy score, ambience and effects (`compose7|8_music.py`, `compose7|8_sfx.py`, `lib3*.py`, `synth.py`) and the mix (`mix7|8.py`: ducking under the voice, two-pass loudness to about -14 LUFS) |
-| `vo/` | Kokoro TTS narration (`gen_ep7_vo.py`, `gen_ep8_vo.py`, voice `am_michael`) |
-| `tools/` | `run_render8.sh` (6 shards of 450 frames, resumable), `sheet8.sh` and `dbg8.py` (contact sheets and one-frame debugging), `qc8_video.sh` and `qc8_sheet.py` (measurements and contact sheets on the final MP4), `subs_proto/` (Malayalam subtitle prototype) |
-| `episodes/ep08/` | narration timing (`vo_timing.json`, `vo_meta.json`) and the caption text as posted |
+| `vo/` | Kokoro TTS narration (`gen_ep7_vo.py`, `gen_ep8_vo.py`, `gen_ep9_vo.py` with `ep9_lines.json`, voice `am_michael`) |
+| `tools/` | `run_render8.sh` (6 shards of 450 frames, resumable), `sheet8.sh` and `dbg8.py` (contact sheets and one-frame debugging), `qc8_video.sh` and `qc8_sheet.py` (measurements and contact sheets on the final MP4), `subs_proto/` (Malayalam subtitle prototype). Episode 9 versions: `run_render9.sh`, `encode9.sh` (join, mux, two-pass x264 to about 92 MB), `qc9_video.sh`, `dbg9.py`, `mont.py`, `subw9.py` (measures every subtitle line in the page font) and `build_subs9.py` (wraps the Malayalam to 850 px, two lines per card, times the cards to the real clips; line-break rules and one manual split for clip d4). `make_weekly_batch_ep10_15.py` generated the Ep10-Ep15 script data |
+| `episodes/ep08/`, `episodes/ep09/` | narration timing (`vo_timing.json`, `vo_meta.json`) and the caption text (Ep8 as posted; Ep9 as scheduled for posting) |
+| `episodes/ep10/` to `ep15/` | `lines.json`: narration, reflection, question, Malayalam text and caption data for Genesis 10-15, approved by the owner on 14 Nov 2026 (10:51 Muscat). Not built yet |
 
-## Run order for an episode (as done for Episode 8)
+## Run order for an episode (as done for Episodes 8 and 9; use the `...9` scripts as the template)
 1. `g11/build8.sh` builds the page. 2. `vo/gen_epN_vo.py` writes the narration clips. 3. `music/composeN_*.py` then `music/mixN.py` write the score and the final mix. 4. `tools/run_render8.sh` renders the frames in shards (about 5 minutes per 15 s shard on 2 CPU cores). 5. Join shards, mux the audio, two-pass x264 to 95 MB or less (about 8 Mbps video, AAC 192k). 6. `tools/qc8_video.sh` and `tools/qc8_sheet.py`, then look at the frames.
 
 ## Not in this repo / known gaps
 - `render.py` comes from the `video-from-code` skill of the owner's Claude account (path in `run_render8.sh`), not from this repo.
 - The Kokoro model files (`vo/model/kokoro-v1.0.int8.onnx`, `voices-v1.0.bin`) are not committed; python packages used: kokoro-onnx, numpy, scipy, soundfile, playwright, pillow, ffmpeg on the PATH.
 - Paths are absolute (`/home/claude/...`); a fresh session has to copy the folders there. Making them relative is open work.
-- Only Episode 8 has been built from this exact code. Episodes 1 to 7 used earlier source packages that the owner supplied separately.
+- Only Episodes 8 and 9 have been built from this code. Episodes 1 to 7 used earlier source packages that the owner supplied separately.
 - Untested: a full run inside a fresh scheduled session.

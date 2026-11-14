@@ -1,0 +1,104 @@
+{
+ "episode": 13,
+ "chapter": "Genesis 13",
+ "title": "Abram and Lot",
+ "hook": "ABRAM|AND LOT",
+ "story": [
+  {
+   "id": "a1",
+   "en": "Abram returned from Egypt, rich in livestock, silver, and gold.",
+   "ml": "അബ്രാം ഈജിപ്തിൽ നിന്നു മടങ്ങി; കാലിക്കൂട്ടങ്ങളും വെള്ളിയും പൊന്നും കൊണ്ട് സമ്പന്നനായി."
+  },
+  {
+   "id": "b1",
+   "en": "Lot also had flocks and tents, and the land could not hold them both.",
+   "ml": "ലോത്തിനും ആടുമാടുകളും കൂടാരങ്ങളും ഉണ്ടായിരുന്നു; ആ ദേശത്തിന് ഇരുവരെയും വഹിക്കാൻ കഴിഞ്ഞില്ല."
+  },
+  {
+   "id": "b2",
+   "en": "Quarrels began between their herders.",
+   "ml": "അവരുടെ ഇടയന്മാർക്കിടയിൽ കലഹം തുടങ്ങി."
+  },
+  {
+   "id": "c1",
+   "en": "Abram said to Lot: let there be no strife between us, for we are family.",
+   "ml": "അബ്രാം ലോത്തിനോടു പറഞ്ഞു: നമുക്കിടയിൽ കലഹം വേണ്ട; നാം ബന്ധുക്കളല്ലേ."
+  },
+  {
+   "id": "c2",
+   "en": "The whole land is before you. If you go left, I will go right.",
+   "ml": "ദേശം മുഴുവൻ നിന്റെ മുമ്പിലുണ്ട്. നീ ഇടത്തോട്ടു പോയാൽ ഞാൻ വലത്തോട്ടു പോകാം."
+  },
+  {
+   "id": "d1",
+   "en": "Lot saw the Jordan plain, well watered like the garden of the Lord.",
+   "ml": "ലോത്ത് ജോർദാൻ സമതലം കണ്ടു; കർത്താവിന്റെ തോട്ടം പോലെ ജലസമൃദ്ധം."
+  },
+  {
+   "id": "d2",
+   "en": "He chose it, and pitched his tent near Sodom.",
+   "ml": "അവൻ അതു തിരഞ്ഞെടുത്ത് സോദോമിനടുത്ത് കൂടാരമടിച്ചു."
+  },
+  {
+   "id": "d3",
+   "en": "Now the people of Sodom were wicked, great sinners against the Lord.",
+   "ml": "എന്നാൽ സോദോമിലെ ആളുകൾ ദുഷ്ടരായിരുന്നു; കർത്താവിനെതിരെ വലിയ പാപികൾ."
+  },
+  {
+   "id": "e1",
+   "en": "After Lot left, the Lord told Abram: look in every direction.",
+   "ml": "ലോത്ത് പോയശേഷം കർത്താവ് അബ്രാമിനോടു പറഞ്ഞു: എല്ലാ ദിക്കിലേക്കും നോക്കുക."
+  },
+  {
+   "id": "e2",
+   "en": "All the land you see, I will give to you and your descendants forever.",
+   "ml": "നീ കാണുന്ന ദേശമെല്ലാം ഞാൻ നിനക്കും നിന്റെ സന്തതിക്കും എന്നേക്കും തരും."
+  },
+  {
+   "id": "e3",
+   "en": "They will be like the dust of the earth.",
+   "ml": "അവർ ഭൂമിയിലെ പൊടിപോലെ ആകും."
+  },
+  {
+   "id": "e4",
+   "en": "Abram settled at the oaks of Mamre, and built an altar to the Lord.",
+   "ml": "അബ്രാം മമ്രേയിലെ ഓക്കുമരങ്ങൾക്കരികെ താമസിച്ച് കർത്താവിന് ഒരു ബലിപീഠം പണിതു."
+  }
+ ],
+ "reflection": [
+  {
+   "id": "h1",
+   "en": "Abram let Lot choose first, to keep the peace.",
+   "ml": "സമാധാനം നിലനിർത്താൻ അബ്രാം ലോത്തിനെ ആദ്യം തിരഞ്ഞെടുക്കാൻ അനുവദിച്ചു."
+  },
+  {
+   "id": "h2",
+   "en": "Lot chose by what looked good. Abram trusted what God had promised.",
+   "ml": "ലോത്ത് കാഴ്ചയിൽ നല്ലതു തിരഞ്ഞെടുത്തു; അബ്രാം ദൈവത്തിന്റെ വാഗ്ദാനത്തിൽ വിശ്വസിച്ചു."
+  },
+  {
+   "id": "h3",
+   "en": "Peace is worth more than winning, and trust is worth more than what we can see.",
+   "ml": "ജയിക്കുന്നതിനെക്കാൾ വിലയുള്ളതാണ് സമാധാനം; കാണുന്നതിനെക്കാൾ വിലയുള്ളതാണ് വിശ്വാസം."
+  },
+  {
+   "id": "h4",
+   "en": "Today, choose peace over being right.",
+   "ml": "ഇന്ന് ശരിയാകുന്നതിനെക്കാൾ സമാധാനം തിരഞ്ഞെടുക്കുക."
+  }
+ ],
+ "question": {
+  "id": "i",
+  "en": "What would you give up to keep the peace?",
+  "ml": "സമാധാനത്തിനായി നീ എന്തു വിട്ടുകൊടുക്കും?"
+ },
+ "tags": "#Genesis13 #Abraham #CatholicBible #TheLivingWordFilms",
+ "caption": {
+  "hook": "Genesis 13: Abram lets Lot choose, and chooses peace.",
+  "story": "Abram and Lot became too rich to share the land. Abram offered Lot the first choice, and Lot chose the well-watered plain near Sodom. Then the Lord renewed his promise to Abram: look in every direction, all this land is yours.",
+  "reflection": "Peace is worth more than winning, and trust is worth more than what we can see.",
+  "malayalam": "അബ്രാമും ലോത്തും ഒരുമിച്ചു കഴിയാൻ ദേശം തികയാതെ വന്നു. സമാധാനത്തിനായി അബ്രാം ലോത്തിനെ ആദ്യം തിരഞ്ഞെടുക്കാൻ അനുവദിച്ചു; പിന്നെ കർത്താവ് അബ്രാമിന് തന്റെ വാഗ്ദാനം പുതുക്കി നൽകി.",
+  "ask": "Save this and share it with someone who is choosing between peace and being right.",
+  "episode_line": "Episode 13 of The Living Word Films, Catholic Bible stories from Genesis to Revelation. Inspired by Genesis 13 (NRSV-CE)."
+ }
+}
