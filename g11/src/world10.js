@@ -26,15 +26,15 @@ export const EV = {
 };
 
 const D2R = Math.PI / 180;
-const headX = (vx, vz) => Math.atan2(-vz, vx);   // rotation.y that points a model's +x axis along (vx, vz)
-const headZ = (vx, vz) => Math.atan2(vx, vz);    // rotation.y that points a figure (front = +z) along (vx, vz)
-const SKINS10 = ['#c98d62', '#b57a50', '#d9a073', '#9c6a42', '#e4b48a', '#8a5a3a', '#ba8458'];
-const ROBES = ['#b5654a', '#c9a15a', '#5e7fa6', '#8a9a6a', '#cfc2a0', '#a2564e', '#6c5a8a', '#d9b36a', '#7a8a9a', '#a8744a', '#3f6a78'];
-const HAIRS = ['#2e1d10', '#3a2616', '#1f160d', '#5a4128', '#6a4a2a'];
-const mkPerson = (R, sc = .45, o = {}) => person(R, { pants: pk(R, ROBES), top: pk(R, ROBES), skin: pk(R, SKINS10), hair: pk(R, HAIRS), cloth: R() < .4 ? pk(R, ['#efe4cc', '#d9ccb0', '#c9b88a']) : null, long: R() < .3, beard: R() < .3 ? pk(R, ['#3a2616', '#5a4128', '#2e1d10']) : null, sash: R() < .5 ? '#5a3a20' : null, seed: (R() * 1e6) | 0, ...o }, sc);
+export const headX = (vx, vz) => Math.atan2(-vz, vx);   // rotation.y that points a model's +x axis along (vx, vz)
+export const headZ = (vx, vz) => Math.atan2(vx, vz);    // rotation.y that points a figure (front = +z) along (vx, vz)
+export const SKINS10 = ['#c98d62', '#b57a50', '#d9a073', '#9c6a42', '#e4b48a', '#8a5a3a', '#ba8458'];
+export const ROBES = ['#b5654a', '#c9a15a', '#5e7fa6', '#8a9a6a', '#cfc2a0', '#a2564e', '#6c5a8a', '#d9b36a', '#7a8a9a', '#a8744a', '#3f6a78'];
+export const HAIRS = ['#2e1d10', '#3a2616', '#1f160d', '#5a4128', '#6a4a2a'];
+export const mkPerson = (R, sc = .45, o = {}) => person(R, { pants: pk(R, ROBES), top: pk(R, ROBES), skin: pk(R, SKINS10), hair: pk(R, HAIRS), cloth: R() < .4 ? pk(R, ['#efe4cc', '#d9ccb0', '#c9b88a']) : null, long: R() < .3, beard: R() < .3 ? pk(R, ['#3a2616', '#5a4128', '#2e1d10']) : null, sash: R() < .5 ? '#5a3a20' : null, seed: (R() * 1e6) | 0, ...o }, sc);
 
 // ---------------- the little floating lands
-function mkIslet(rn, R, hf, gc, rings = 26, segs = 64) {
+export function mkIslet(rn, R, hf, gc, rings = 26, segs = 64) {
   const V = [];
   for (let i = 0; i <= rings; i++) { const row = []; for (let j = 0; j < segs; j++) {
     let r = i / rings * R, a = j / segs * TAU; if (i > 0 && i < rings) { r += (rn() - .5) * .4 * (R / rings); a += (rn() - .5) * .55 * TAU / segs; }
@@ -52,8 +52,8 @@ function mkIslet(rn, R, hf, gc, rings = 26, segs = 64) {
   }
   const m = new THREE.Mesh(gb.build(), lam); m.receiveShadow = true; m.castShadow = true; m.frustumCulled = false; return m;
 }
-const C3 = c => new THREE.Color(c);
-const rimf = (R, h, r, lo = .03) => h * (1 - smooth(R - 2.0, R - .15, r)) + lo * smooth(R - 2.0, R - .15, r);
+export const C3 = c => new THREE.Color(c);
+export const rimf = (R, h, r, lo = .03) => h * (1 - smooth(R - 2.0, R - .15, r)) + lo * smooth(R - 2.0, R - .15, r);
 const RI10 = 10;
 // positions of the lands (x, y, z) in the world; y is the water/ground reference of each land
 export const POS = { J: [-33, -1.2, 6], H: [4, -1.8, 33], B: [31, -1.0, 21], A: [36, -2.0, -8], S: [13, -1.5, -33], F1: [-52, -3, -42], F2: [66, -3, -40], F3: [-60, -2.5, 30], F4: [58, -2.5, 56] };
@@ -94,7 +94,7 @@ const hF = (R) => (x, z) => { const r = Math.hypot(x, z); return rimf(R, .3 + .5
 const gcF = (x, y, z, s) => C3('#86985a').lerp(C3('#9a9488'), clamp((y - .5) * 1.2)).getHex();
 
 // ---------------- pieces
-function tentMesh(R, col = '#cdb48c', s = .8) {
+export function tentMesh(R, col = '#cdb48c', s = .8) {
   const b = new GB(R), r = 1.2 * s, h = 1.15 * s;
   b.add(new THREE.ConeGeometry(r, h, 4, 1).rotateY(Math.PI / 4).translate(0, h / 2, 0), col, [0, 0, 0], [1, 1, 1], [0, 0, 0], .05);
   b.box('#5a3a20', [0, h + .06, 0], [.05, .26, .05], [0, 0, 0], .02);
@@ -102,9 +102,9 @@ function tentMesh(R, col = '#cdb48c', s = .8) {
   geo.setAttribute('position', new THREE.Float32BufferAttribute(v.flat(), 3)); geo.setIndex([0, 1, 2]); geo.computeVertexNormals(); b.add(geo, '#1a1008', [0, 0, 0], [1, 1, 1], [0, 0, 0], 0);
   const m = new THREE.Mesh(b.build(), lam); m.castShadow = true; m.receiveShadow = true; return m;
 }
-const mudCols = ['#c8b48c', '#b8a47c', '#d4c29c', '#c2a67a', '#bfae8a'];
+export const mudCols = ['#c8b48c', '#b8a47c', '#d4c29c', '#c2a67a', '#bfae8a'];
 // houses/walls/towers: merged per sector so a whole district can rise out of the ground
-function houseBlock(R, cx, cz, nx, nz, sp, hf, y0) {
+export function houseBlock(R, cx, cz, nx, nz, sp, hf, y0) {
   const b = new GB(R);
   for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) {
     if (R() < .12) continue; const x = cx + (i - (nx - 1) / 2) * sp + (R() - .5) * .22, z = cz + (j - (nz - 1) / 2) * sp + (R() - .5) * .22, w = .62 + R() * .36, d = .62 + R() * .36, h = .5 + R() * .45, col = pk(R, mudCols), y = hf(x, z) - y0;
@@ -113,7 +113,7 @@ function houseBlock(R, cx, cz, nx, nz, sp, hf, y0) {
   }
   return b;
 }
-function wallRing(R, cx, cz, hw, hd, hf, y0, towers = true) {
+export function wallRing(R, cx, cz, hw, hd, hf, y0, towers = true) {
   const b = new GB(R), H = .9, T = .16, seg_ = [[cx, cz - hd, hw * 2, T], [cx, cz + hd, hw * 2, T], [cx - hw, cz, T, hd * 2], [cx + hw, cz, T, hd * 2]];
   for (const [x, z, w, d] of seg_) { b.box('#c2ae86', [x, hf(x, z) - y0 + H / 2, z], [w, H, d], [0, 0, 0], .04);
     const n = Math.floor(Math.max(w, d) / .34); for (let k = 0; k < n; k++) { const u = (k + .5) / n - .5; b.box('#b09c74', [x + (w > d ? u * w : 0), hf(x, z) - y0 + H + .07, z + (w > d ? 0 : u * d)], [w > d ? .16 : T * 1.2, .14, w > d ? T * 1.2 : .16], [0, 0, 0], .03); } }
@@ -121,13 +121,13 @@ function wallRing(R, cx, cz, hw, hd, hf, y0, towers = true) {
   b.box('#2a1c10', [cx, hf(cx, cz + hd) - y0 + .32, cz + hd + .1], [.5, .64, .12], [0, 0, 0], .02);
   return b;
 }
-function palaceBlock(R, cx, cz, hf, y0) {
+export function palaceBlock(R, cx, cz, hf, y0) {
   const b = new GB(R), y = hf(cx, cz) - y0; b.box('#c9b48a', [cx, y + .3, cz], [2.6, .6, 2.0], [0, 0, 0], .04); b.box('#d4c29c', [cx, y + .8, cz], [1.9, .5, 1.4], [0, 0, 0], .04); b.box('#dccaa6', [cx, y + 1.2, cz], [1.2, .4, .9], [0, 0, 0], .04); b.box('#8a4a32', [cx, y + 1.46, cz], [.9, .12, .6], [0, 0, 0], .03);
   for (const s of [-1, 1]) b.box('#e8dcc0', [cx + s * .55, y + 1.7, cz + .1], [.06, .5, .06], [0, 0, 0], .02); return b;
 }
-const meshOf = (b) => { const m = new THREE.Mesh(b.build(), lam); m.castShadow = true; m.receiveShadow = true; return m; };
+export const meshOf = (b) => { const m = new THREE.Mesh(b.build(), lam); m.castShadow = true; m.receiveShadow = true; return m; };
 
-function makeBoat(R, col = '#8a5a38', sail = '#efe4cc') {
+export function makeBoat(R, col = '#8a5a38', sail = '#efe4cc') {
   const g = new THREE.Group(), b = new GB(R);
   b.box(col, [0, .1, 0], [1.5, .16, .46], [0, 0, 0], .05); b.box(col, [.88, .2, 0], [.4, .16, .3], [0, 0, .45], .05); b.box(col, [-.88, .2, 0], [.36, .16, .3], [0, 0, -.4], .05);
   b.box('#6a4426', [0, .26, .22], [1.4, .1, .05], [0, 0, 0], .04); b.box('#6a4426', [0, .26, -.22], [1.4, .1, .05], [0, 0, 0], .04); b.box('#5a3a20', [.1, .8, 0], [.05, 1.3, .05], [0, 0, 0], .02);
@@ -143,7 +143,7 @@ function bowProp(R) {   // long axis y, belly toward +z, string in the z = 0 pla
 }
 
 // ---------------- smoke: one instanced mesh for every chimney in the world
-function makeSmoke(maxEm) {
+export function makeSmoke(maxEm) {
   const NP = 7, n = maxEm * NP, mat = new THREE.MeshBasicMaterial({ color: 0xd8cabb, transparent: true, opacity: .42, depthWrite: false, toneMapped: false }), m = new THREE.InstancedMesh(G.ico0, mat, n);
   m.frustumCulled = false; m.renderOrder = 6; const ob = new THREE.Object3D(), em = [];
   function update(t, col) { mat.color.set(col); let i = 0;
@@ -154,7 +154,7 @@ function makeSmoke(maxEm) {
 }
 
 // ---------------- the golden thread: a tube that grows along a curve, with a bright head
-function makeThread(p0, p1, lift, rad = .06) {
+export function makeThread(p0, p1, lift, rad = .06) {
   const mid = [(p0[0] + p1[0]) / 2, Math.max(p0[1], p1[1]) + lift, (p0[2] + p1[2]) / 2], curve = new THREE.QuadraticBezierCurve3(new THREE.Vector3(...p0), new THREE.Vector3(...mid), new THREE.Vector3(...p1)), SEGS = 72, RAD = 5;
   const g = new THREE.Group(), mk = (r, op) => { const m = new THREE.Mesh(new THREE.TubeGeometry(curve, SEGS, r, RAD, false), new THREE.MeshBasicMaterial({ color: 0xffd27a, transparent: true, opacity: op, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })); m.frustumCulled = false; m.renderOrder = 7; g.add(m); return m; };
   const core = mk(rad, .95), halo = mk(rad * 3.4, .16), head = spriteGlow(p0[0], p0[1], p0[2], 1.6, 0xffe3a0, 0);
@@ -177,7 +177,7 @@ export function cloudSea(rn, n, keep) {
     m.instanceMatrix.needsUpdate = true; }
   return { mesh: m, update, mat };
 }
-function farMountains10(rn) {
+export function farMountains10(rn) {
   const g = new THREE.Group(), mat = new THREE.MeshBasicMaterial({ vertexColors: true, toneMapped: false }), cols = ['#2b3250', '#232a45', '#1c2238'], N = 34;
   for (let i = 0; i < N; i++) { const a = i / N * TAU + rn() * .12, r = 118 + rn() * 34, s = 4 + rn() * 5, c = cols[i % 3]; const m = new THREE.Mesh(peakGeo(s, rn, [c, c, c], false), mat); m.scale.set(2.8, 1.0 + rn() * .25, 2.2); m.position.set(Math.cos(a) * r, -5 + rn() * 2, Math.sin(a) * r); m.rotation.y = rn() * 6; g.add(m); }
   g.userData.mat = mat; return g;

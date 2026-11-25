@@ -30,7 +30,7 @@ export function cineTitle(cx, t, lines, tIn, tOut, o = {}) {
   lines.forEach((ln, i) => {
     const ti = tIn + i * (o.stag ?? .22), p = ease.outCubic(seg(t, ti, ti + 1.1)); if (p <= 0) return;
     let sz = size; cx.font = `${o.weight || 700} ${sz}px ${CINZEL}`; cx.letterSpacing = `${sz * .05}px`; const w0 = cx.measureText(ln).width; if (w0 > maxW) sz = size * maxW / w0;
-    const ls = sz * (.045 + .20 * (1 - p)); cx.font = `${o.weight || 700} ${sz}px ${CINZEL}`; cx.letterSpacing = `${ls}px`;
+    let ls = sz * (.045 + .20 * (1 - p)); cx.font = `${o.weight || 700} ${sz}px ${CINZEL}`; cx.letterSpacing = '0px'; { const wb = cx.measureText(ln).width, n = ln.length; ls = Math.max(sz * .045, Math.min(ls, (1030 - wb) / n)); } cx.letterSpacing = `${ls}px`;
     const base = y0 + i * lh + (1 - p) * sz * .18, w = cx.measureText(ln).width, x = W / 2 + ls / 2;
     const a = outA * Math.min(1, p * 2.0);
     const sweep = seg(t, ti + .1, ti + 1.5), cxh = lerp(-w * .2, w * 1.2, sweep) - w / 2 + W / 2;
