@@ -13,7 +13,7 @@ for k, sp in SPLIT.items():
     ws = ML[k].strip().split(' '); assert sum(sp) == len(ws), (k, sum(sp), len(ws)); o = 0; CHUNKS[k] = []
     for n in sp: CHUNKS[k].append(' '.join(ws[o:o + n])); o += n
 ENDS = {'a1':[1.54,2.61,4.2,5.83,7.46],'a2':[2.21,3.9,5.5,6.41,7.85],'b1':[2.22,2.93,4.26,6.64,7.2],'b2':[1.7,3.09,4.5,5.68],'c1':[0.96,2.89,3.62,4.85,6.05,6.88,8.1,9.16],'c2':[1.85,2.85,3.8,4.99],'d1':[1.02,2.4,3.76],'d2':[1.82,2.25,3.7,4.55],'e1':[1.79],'h1':[2.12,3.0,4.94,5.93,7.3],'h2':[1.44,2.9,3.79],'h3':[2.08,3.36],'h4':[1.25,2.14,2.83],'i':[2.18]}
-HOLD = {'i':1.6,'h4':1.2,'d2':0.6}   # the question card stays up while the question is on screen
+HOLD = {'i':1.6,'h4':1.2,'d2':0.5}   # the question card stays up while the question is on screen
 for k in ML: assert ' '.join(CHUNKS[k])==ML[k].strip(), ('chunks do not rejoin to the approved text', k)
 MAXW = 850; LIM = 860   # 10 px inside the 860 rule
 JS = """async (a)=>{const [texts,maxw,force]=a; await document.fonts.load('800 52px "Anek Malayalam"', texts.join(' ')+' ,;:.?!'); await document.fonts.ready; const cx=document.createElement('canvas').getContext('2d'); cx.font='800 52px "Anek Malayalam", sans-serif';
@@ -58,6 +58,22 @@ with sync_playwright() as p:
                 else: nc.append(c); ne.append(e)
                 prev=e
             CHUNKS[k]=nc; ENDS[k]=ne
+    # merge phase (added after the first Ep40 build had 55 cards, 14 under 1 s and two under 0.4 s): a card shorter than MINDUR is joined to its shorter neighbour when the joined text still fits in two lines of <= MAXW px
+    MINDUR, MAXDUR = 1.0, 3.6
+    fits = lambda text: len(pg.evaluate(JS, [[text], MAXW, [None]])[0]['lines']) <= 2
+    for k in keys:
+        changed = True
+        while changed:
+            changed = False; starts = [0] + ENDS[k][:-1]; durs = [e - s_ for s_, e in zip(starts, ENDS[k])]
+            for i in sorted(range(len(durs)), key=lambda i: durs[i]):
+                if durs[i] >= MINDUR: break
+                for j in sorted([j for j in (i - 1, i + 1) if 0 <= j < len(durs)], key=lambda j: durs[j]):
+                    lo, hi = min(i, j), max(i, j); text = CHUNKS[k][lo] + ' ' + CHUNKS[k][hi]
+                    if durs[lo] + durs[hi] <= MAXDUR and fits(text):
+                        print('merge', k, lo, hi, '->', text); CHUNKS[k][lo:hi + 1] = [text]; ENDS[k][lo:hi + 1] = [ENDS[k][hi]]; changed = True; break
+                if changed: break
+    items = [(k, i, c) for k in keys for i, c in enumerate(CHUNKS[k])]
+    res = pg.evaluate(JS, [[c for _, _, c in items], MAXW, [None] * len(items)])
     b.close()
 bad=[(it[0],it[1],rr['lines']) for it,rr in zip(items,res) if len(rr['lines'])>2]
 print('TOO LONG:'); [print('  ',b) for b in bad]
@@ -70,5 +86,7 @@ for k in keys:
         a=t0+prev; bb=t0+ends[n]; last=n==len(ends)-1
         cards.append({'a':round(a+(.03 if n else 0),2),'b':round(bb+((.3+HOLD.get(k,0)) if last else -.03),2),'t':'|'.join(L),'clip':k}); prev=ends[n]
         print(k,n,r['w'],'|'.join(L))
+for x, y in zip(cards, cards[1:]): assert x['b'] <= y['a'] + 1e-6, ('overlap', x, y)
+for k in keys: assert ' '.join(CHUNKS[k]) == ML[k].strip(), ('merged chunks do not rejoin to the approved text', k)
 json.dump(cards,open(os.environ.get('SUBS_OUT','/home/claude/g11/src/subs40.json'),'w'),ensure_ascii=False,indent=0)
 print(len(cards),'cards; widest line', widest)
