@@ -1,0 +1,13 @@
+import subprocess, sys
+from PIL import Image
+F='ep38_out/LivingWord_Ep38_Genesis38_JudahAndTamar.mp4'; Q='ep38_qc/final'
+T=[0.3,3,6.5,9.5,12.5,15.5,18.5,21.5, 24,27,30,34,38,39,42,45, 48,51,54,57,60,63,66,70, 73,76,79,82,85,86.5,88,89.6]
+for k in range(4):
+    ims=[]
+    for t in T[k*8:(k+1)*8]:
+        p=f'{Q}/f_{t:05.1f}.png'
+        subprocess.run(['ffmpeg','-nostdin','-y','-v','error','-ss',str(t),'-i',F,'-frames:v','1',p],check=True)
+        ims.append(Image.open(p).convert('RGB').resize((380,640),Image.LANCZOS))
+    M=Image.new('RGB',(380*4,640*2))
+    for i,im in enumerate(ims): M.paste(im,((i%4)*380,(i//4)*640))
+    M.save(f'{Q}/final_sheet_{k+1}.png'); print('sheet',k+1,T[k*8:(k+1)*8])
