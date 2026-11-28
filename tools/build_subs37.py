@@ -36,9 +36,11 @@ JS = """async (a)=>{const [texts,maxw,force]=a; await document.fonts.load('800 5
    rec(0,[]); }
   return top?top.L:greedy(t,maxw); };
  return texts.map((t,i)=>{ const L=force[i]||best(t); return {lines:L, w:L.map(W)}; });}"""
-def split_chunk(c, t0, t1):
+# Keep the same break as before the Joseph spelling change ("twenty" stays with "pieces of silver"); without this the character-balance rule moves one word.
+FORCE_J = {('c2', 1): 3}
+def split_chunk(c, t0, t1, j0=None):
     ws = c.split(' '); best = None
-    for j in range(1, len(ws)):
+    for j in ([j0] if j0 else range(1, len(ws))):
         l, r = ' '.join(ws[:j]), ' '.join(ws[j:]); cost = abs(len(l) - len(r)) - (40 if l[-1] in ',;:.?!' else 0)
         if best is None or cost < best[0]: best = (cost, l, r)
     _, l, r = best; tm = t0 + (t1 - t0) * len(l) / (len(l) + len(r)); return (l, tm), (r, t1)
@@ -54,7 +56,7 @@ with sync_playwright() as p:
         for k in keys:
             nc=[]; ne=[]; prev=0
             for i,(c,e) in enumerate(zip(CHUNKS[k],ENDS[k])):
-                if (k,i) in bad_: (l,tm),(r,te)=split_chunk(c,prev,e); nc+=[l,r]; ne+=[round(tm,2),e]; print('split',k,i,'->',l,'|',r)
+                if (k,i) in bad_: (l,tm),(r,te)=split_chunk(c,prev,e,FORCE_J.get((k,i))); nc+=[l,r]; ne+=[round(tm,2),e]; print('split',k,i,'->',l,'|',r)
                 else: nc.append(c); ne.append(e)
                 prev=e
             CHUNKS[k]=nc; ENDS[k]=ne
